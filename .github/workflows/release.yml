@@ -1,6 +1,9 @@
 name: Release
 
 on:
+  push:
+    tags:
+      - "v*"
   workflow_dispatch:
     inputs:
       version:
@@ -17,6 +20,8 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -24,12 +29,27 @@ jobs:
           node-version: 22
           cache: npm
 
+      - name: Resolve version
+        id: version
+        shell: bash
+        env:
+          REQUESTED_VERSION: ${{ inputs.version }}
+        run: |
+          if [ -n "$REQUESTED_VERSION" ]; then
+            VERSION="$REQUESTED_VERSION"
+          else
+            VERSION="${GITHUB_REF_NAME#v}"
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
       - name: Validate requested version
         shell: bash
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
         run: |
           PACKAGE_VERSION="$(node -p "require('./package.json').version")"
-          if [ "$PACKAGE_VERSION" != "${{ inputs.version }}" ]; then
-            echo "package.json is $PACKAGE_VERSION, requested ${{ inputs.version }}"
+          if [ "$PACKAGE_VERSION" != "$VERSION" ]; then
+            echo "package.json is $PACKAGE_VERSION, requested $VERSION"
             exit 1
           fi
 
@@ -39,14 +59,21 @@ jobs:
       - name: Run checks
         run: npm run check
 
-      - name: Create tag and GitHub release
+      - name: Create tag for manual release
+        if: github.event_name == 'workflow_dispatch'
         env:
-          GH_TOKEN: ${{ github.token }}
-          VERSION: ${{ inputs.version }}
+          VERSION: ${{ steps.version.outputs.version }}
         shell: bash
         run: |
           git tag "v$VERSION"
           git push origin "v$VERSION"
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+        shell: bash
+        run: |
           gh release create "v$VERSION" dist/LastSeen.plugin.js \
             --title "LastSeen v$VERSION" \
             --generate-notes \

@@ -14,8 +14,8 @@
 4. Install `dist/LastSeen.plugin.js` in BetterDiscord and complete the manual test matrix below.
 5. Commit the source, lockfile, documentation, and generated `dist/LastSeen.plugin.js`.
 6. Commit and push the release changes to `main`.
-7. Run the **Release** GitHub Actions workflow with the matching version, such as `1.4.2`.
-8. Confirm the workflow creates tag `v1.4.2`, publishes the GitHub release, and attaches `LastSeen.plugin.js`.
+7. Create and push an annotated tag, such as `v1.4.2`; alternatively, run the **Release** workflow manually with version `1.4.2`.
+8. Confirm the workflow publishes the GitHub release and attaches `LastSeen.plugin.js`.
 
 ## Manual Test Matrix
 
