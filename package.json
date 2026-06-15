@@ -1,0 +1,38 @@
+{
+  "name": "betterdiscord-last-seen",
+  "version": "1.4.2",
+  "description": "A local-only BetterDiscord plugin that records when users were last observed online.",
+  "private": true,
+  "license": "MIT",
+  "author": "kingslayerrq",
+  "homepage": "https://github.com/kingslayerrq/discord-last-login#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kingslayerrq/discord-last-login.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kingslayerrq/discord-last-login/issues"
+  },
+  "keywords": [
+    "betterdiscord",
+    "discord",
+    "last-seen",
+    "presence",
+    "plugin"
+  ],
+  "type": "commonjs",
+  "main": "dist/LastSeen.plugin.js",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "lint": "eslint .",
+    "test": "node --test",
+    "check": "npm run lint && npm test && npm run build"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.1",
+    "eslint": "10.5.0"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

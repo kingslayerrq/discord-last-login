@@ -1,0 +1,56 @@
+name: Bug report
+description: Report a reproducible LastSeen problem
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: Remove usernames, user IDs, and other personal Discord data from logs and screenshots.
+  - type: input
+    id: version
+    attributes:
+      label: LastSeen version
+      placeholder: "1.4.2"
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Operating system, Discord channel/version, and BetterDiscord version
+    validations:
+      required: true
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Affected surface
+      options:
+        - Tracking or history
+        - User popout
+        - Full profile
+        - DM profile sidebar
+        - Server member list
+        - Settings or diagnostics
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction steps
+      placeholder: |
+        1. Open...
+        2. Click...
+        3. Observe...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: diagnostics
+    attributes:
+      label: Diagnostics and logs
+      description: Paste LastSeen diagnostics and console warnings with personal data removed.
