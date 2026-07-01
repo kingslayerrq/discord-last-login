@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "esbuild": "0.28.1",
-    "eslint": "10.5.0"
+    "eslint": "10.6.0"
   },
   "engines": {
     "node": ">=22"
